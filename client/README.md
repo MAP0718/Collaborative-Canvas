@@ -1,4 +1,4 @@
-# Collaborative Canvas 🎨
+# Collaborative Canvas 
 
 A fun, real-time collaborative drawing app where you and your friends can draw together online! Just create a room, invite others, and start creating beautiful art together.
 
