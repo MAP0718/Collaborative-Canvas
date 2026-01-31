@@ -1,0 +1,169 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
+.app-container {
+  display: flex;
+  height: 100vh;
+  background-color: #f0f2f5;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  overflow: hidden; /* Prevent sidebar from scrolling */
+}
+
+/* Sidebar */
+.sidebar {
+  width: 180px;
+  background-color: #1a252f; /* Slightly darker for better contrast */
+  color: white;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0; 
+}
+.user-item {
+  width: 100%;
+  padding: 2px;
+  background: #2c3e50;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  border-left: 4px solid #3498db; /* Adds a nice "pro" accent line */
+  box-sizing: border-box; /* Ensures padding doesn't break the width */
+}
+
+.user-list-container {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+/* Main Area */
+.main-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.toolbar {
+  background: white;
+  padding: 10px 20px;
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* THE SCROLLABLE CONTAINER */
+.canvas-container {
+  flex-grow: 1;
+  position: relative;
+  background: #dfe6e9;
+  overflow: auto; /* For scroll */
+  padding: 50px;
+}
+
+canvas {
+  background: white;
+  box-shadow: 0 0 20px rgba(0,0,0,0.2);
+  cursor: crosshair;
+  display: block;
+  
+  background-size: 40px 40px;
+}
+
+/* Notifications */
+.drawing-label {
+  position: absolute;
+  background: rgba(52, 152, 219, 0.9);
+  color: white;
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 12px;
+  pointer-events: none;
+  animation: fadeOut 1s forwards;
+  z-index: 10;
+}
+
+/* Buttons */
+button {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background: #3498db;
+  color: white;
+}
+
+button:hover { background: #2980b9; }
+.active-tool { background: green; color: white !important; font-weight: bold; }
+.undo-btn {
+   background-color: "#9b59b6";
+   margin-left: "10px";
+  }
+
+/* Login Page Styling */
+.login-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #e0e6ec;
+}
+
+.login-card {
+  background-image: linear-gradient(135deg, #1e3a8a, #065f46);
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.35);
+  text-align: center;
+  color: white;
+  width: 320px;
+}
+
+.login-card h1 {
+  font-size: 2.2em;
+  margin-bottom: 10px;
+}
+
+.tagline {
+  font-family: 'Pacifico';
+  font-size: 1.4em;
+  color: #a3ffac;
+  margin-bottom: 30px;
+}
+
+.login-card input {
+  width: calc(100% - 24px);
+  padding: 12px;
+  margin-bottom: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: #ffffff;
+  outline: none;
+}
+
+.login-card button {
+  background: linear-gradient(135deg, #3b82f6, #60a5fa);
+  padding: 12px 25px;
+  font-weight: bold;
+}
+
+.clear-btn{
+  background-color: red;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.redo-btn{
+  background-color: "#9b59b6";
+   margin-left: "10px";
+}
+
+.hr{
+  width: '100%';
+  opacity: 0.1;
+  margin: '20px 0' ;
+}
