@@ -15,6 +15,7 @@ function Canvas({ socket, room, username }) {
   const [users, setUsers] = useState([]);
   const [activeLabels, setActiveLabels] = useState([]);
   const [currentStrokeId, setCurrentStrokeId] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -110,69 +111,56 @@ function Canvas({ socket, room, username }) {
     socket.emit("draw_step", { roomId: room, step });
   };
 
-  return (
-    <div className="app-container">
-      <div className="sidebar">
-        <h2>Room: {room}</h2>
-        <p >Logged in as: <strong>{username}</strong></p>
-        <hr className="hr" />
-
-        <h4>Online Users</h4>
-
-        {/* WRAP THE LIST IN THIS NEW DIV */}
-        <div className="user-list-container">
-          {users.map((u) => (
-            <div key={u.id} className="user-item">
-              {u.username} {u.id === socket.id ? "(You)" : ""}
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="main-content">
-        <div className="toolbar">
-          <button className={tool === "brush" ? "active-tool" : ""} onClick={() => setTool("brush")}>Brush</button>
-          <button className={tool === "eraser" ? "active-tool" : ""} onClick={() => setTool("eraser")}>Eraser</button>
-          <input type="color" value={color} onChange={(e) => setColor(e.target.value)} disabled={tool === "eraser"} />
-          <input type="range" min="1" max="60" value={size} onChange={(e) => setSize(e.target.value)} />
-          <span>Size: {size}px</span>
-          <button className="undo-btn" onClick={() => socket.emit("undo", room)}>Undo</button>
-          <button
-            className="redo-btn"
-            onClick={() => socket.emit("redo", room)}
-          >
-            Redo
-          </button>
-          <button
-            className="clear-btn"
-            onClick={() => {
-              if (window.confirm("Are you sure you want to clear the entire canvas?")) {
-                socket.emit("clear_canvas", room);
-              }
-            }}
-          >
-            Clear All
-          </button>
-        </div>
-
-        <div className="canvas-container">
-          {activeLabels.map(label => (
-            <div key={label.strokeId} className="drawing-label" style={{ left: label.x, top: label.y - 30 }}>
-              {label.username}
-            </div>
-          ))}
-
-          <canvas
-            ref={canvasRef}
-            onMouseDown={startDrawing}
-            onMouseMove={draw}
-            onMouseUp={() => setIsDrawing(false)}
-            onMouseLeave={() => setIsDrawing(false)}
-          />
-        </div>
+return (
+  <div className="app-container">
+    {/* 1. Add the dynamic class here */}
+    <div className={`sidebar ${!isSidebarOpen ? 'collapsed' : ''}`}>
+      <h2>Room: {room}</h2>
+      <p style={{fontSize: '12px'}}>User: <strong>{username}</strong></p>
+      <hr style={{opacity: 0.1, margin: '15px 0'}} />
+      <h4>Online Users</h4>
+      <div className="user-list-container">
+        {users.map((u) => (
+          <div key={u.id} className="user-item">{u.username}</div>
+        ))}
       </div>
     </div>
-  );
+
+    <div className="main-content">
+      <div className="toolbar">
+        {/* 2. Add the Toggle Button at the start of the toolbar */}
+        <button className="toggle-btn" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+          {isSidebarOpen ? "◀ Hide" : "Users ▶"}
+        </button>
+
+        <button className={tool === "brush" ? "active-tool" : ""} onClick={() => setTool("brush")}>Brush</button>
+        <button className={tool === "eraser" ? "active-tool" : ""} onClick={() => setTool("eraser")}>Eraser</button>
+        <input type="color" value={color} onChange={(e) => setColor(e.target.value)} disabled={tool === "eraser"} />
+        <input type="range" min="1" max="60" value={size} onChange={(e) => setSize(e.target.value)} />
+        <span style={{fontSize: '13px', minWidth: '40px'}}>{size}px</span>
+        <button className="undo-btn" onClick={() => socket.emit("undo", room)}>Undo</button>
+        <button className="redo-btn" onClick={() => socket.emit("redo", room)}>Redo</button>
+        <button className="clear-btn" onClick={() => socket.emit("clear_canvas", room)}>Clear All</button>
+      </div>
+
+      <div className="canvas-container">
+        {activeLabels.map(label => (
+          <div key={label.strokeId} className="drawing-label" style={{ left: label.x, top: label.y - 35 }}>
+            {label.username}
+          </div>
+        ))}
+
+        <canvas
+          ref={canvasRef}
+          onMouseDown={startDrawing}
+          onMouseMove={draw}
+          onMouseUp={() => setIsDrawing(false)}
+          onMouseLeave={() => setIsDrawing(false)}
+        />
+      </div>
+    </div>
+  </div>
+);
 }
 
 export default Canvas;
