@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
@@ -6,9 +7,10 @@ const cors = require("cors");
 const app = express();
 app.use(cors());
 const server = http.createServer(app);
+const PORT = process.env.PORT || 3001;
 
 const io = new Server(server, {
-  cors: { origin: "http://localhost:3000" },
+  cors: { origin: "*" },
 });
 
 const rooms = {};
@@ -81,4 +83,6 @@ io.on("connection", (socket) => {
   });
 });
 
-server.listen(3001, () => console.log("Server running on 3001"));
+server.listen(PORT, () => {
+  console.log(`SERVER IS RUNNING ON PORT ${PORT}`);
+});

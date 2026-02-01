@@ -3,7 +3,7 @@ import "./App.css";
 import io from "socket.io-client";
 import Canvas from "./Canvas";
 
-const socket = io.connect("http://localhost:3001");
+const socket = io.connect(process.env.REACT_APP_BACKEND_URL || "http://localhost:3001");
 
 function App() {
   const [joined, setJoined] = useState(false);
