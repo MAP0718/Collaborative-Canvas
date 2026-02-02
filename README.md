@@ -1,6 +1,8 @@
 # Real-Time Collaborative Whiteboard
 
 A full-stack application that allows multiple users to draw on a shared canvas at the same time. Built with a focus on low-latency synchronization and state management.
+Please check the live url for the experience and backend may take time to load
+<p>https://collaborative-canvas-mu.vercel.app/</p>
 
 ## Features
 - Real-time drawing synchronization using WebSockets.
